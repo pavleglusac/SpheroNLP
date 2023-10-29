@@ -1,6 +1,7 @@
 <script setup>
 import Chat from '../components/Chat.vue';
 import Navbar from '../components/Navbar.vue'
+import SimulationView from '../components/SimulationView.vue';
 </script>
 
 <template>
@@ -20,7 +21,8 @@ import Navbar from '../components/Navbar.vue'
                 </div>
                 <div class="resizer" @mousedown="startResize" id="resizer-left"></div>
                 <div class="box p-3 d-flex w-100" style="height: 69%; justify-content: center;" ref="bottomBox1" id="bottomBox1">
-                    <img src="https://as2.ftcdn.net/jpg/01/36/00/76/1000_F_136007620_CnJyQqcd3giJLsJGsHsLEXl5E9oA56X7.jpg" style="max-height: 100%; max-width: 100%;" class="mx-0" />
+                    <!-- <img src="https://as2.ftcdn.net/jpg/01/36/00/76/1000_F_136007620_CnJyQqcd3giJLsJGsHsLEXl5E9oA56X7.jpg" style="max-height: 100%; max-width: 100%;" class="mx-0" /> -->
+                    <SimulationView></SimulationView>
                 </div>
             </div>
         </div>
