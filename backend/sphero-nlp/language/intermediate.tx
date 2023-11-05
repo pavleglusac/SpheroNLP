@@ -1,0 +1,73 @@
+Program:
+    'BEGIN'
+    commands *= Statement
+    'END'
+;
+
+Statement:
+    RollStatement | LEDStatement | SoundStatement | DeclareStatement | AssignStatement | IfStatement | LoopStatement
+;
+
+Expression:
+    CompareExpression| Random | Literal
+;
+
+Literal:
+    INT | FLOAT | STRING | BOOL | ID
+;
+
+CompareExpression:
+    left=Literal op=CompareOperator right=Literal
+;
+
+CompareOperator:
+    '==' | '!=' | '<' | '<=' | '>' | '>='
+;
+
+RollStatement:
+    'ROLL' degrees=Expression 'DEGREES' 'AT' speed=Expression 'SPEED' 'FOR' seconds=Expression 'SECONDS'
+;
+
+LEDStatement:
+    'LED' red=Expression green=Expression blue=Expression
+;
+
+SoundStatement:
+    'SOUND' name=STRING
+;
+
+DeclareStatement:
+    'LET' name=ID ('=' value=Expression)?
+;
+
+AssignStatement:
+    'SET' name=ID '=' value=Expression
+;
+
+IfStatement:
+    'IF' condition=Expression 'THEN' body*=Statement (ElseStatement)? 'END'
+;
+
+ElseStatement:
+    'ELSE' body*=Statement
+;
+
+LoopStatement:
+    LoopUntil | LoopTimes | LoopForever
+;
+
+LoopUntil:
+    'LOOP' 'UNTIL' condition=Expression 'DO' body*=Statement 'END'
+;
+
+LoopTimes:
+    'LOOP' 'TIMES' times=Expression 'DO' body*=Statement 'END'
+;
+
+LoopForever:
+    'LOOP' 'FOREVER' 'DO' body*=Statement 'END'
+;
+
+Random:
+    'RANDOM' min=Expression 'TO' max=Expression
+;
