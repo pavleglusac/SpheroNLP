@@ -3,9 +3,22 @@ from textx.export import metamodel_export, model_export
 import os
 import Language as Lang
 import sys
+import inspect
 
-# get all classes from the language module
-classes = [getattr(Lang, a) for a in dir(Lang) if not a.startswith("__")]
+classes = []
+for member in dir(Lang):
+    attribute = getattr(Lang, member)
+    if inspect.isclass(attribute) and attribute.__module__ == Lang.__name__:
+        # Ensure we are adding the class itself, not a string representation or instance.
+        classes.append(attribute)
+# Debugging line to check the content of classes list before passing to metamodel_from_file
+for c in classes:
+    print(type(c))
+
+# Assuming you have the correct classes list
+
+
+
 
 path = "./intermediate.tx"
 mm = metamodel_from_file(path, classes=classes)

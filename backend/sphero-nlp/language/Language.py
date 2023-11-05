@@ -1,3 +1,5 @@
+indent_marker = "    "
+
 class Program:
     def __init__(self, commands, parent=None):
         self.parent = parent
@@ -33,7 +35,7 @@ class RollStatement:
         return "ROLL " + str(self.degrees) + " DEGREES AT " + str(self.speed) + " SPEED FOR " + str(self.seconds) + " SECONDS"
     
     def to_python(self, indent=0):
-        return "    " * indent + "droid.roll(" + str(self.degrees) + ", " + str(self.speed) + ", " + str(self.seconds) + ")"
+        return indent_marker * indent + "droid.roll(" + str(self.degrees) + ", " + str(self.speed) + ", " + str(self.seconds) + ")"
 
 
 class LEDStatement:
@@ -47,7 +49,7 @@ class LEDStatement:
         return "LED " + str(self.red) + " " + str(self.green) + " " + str(self.blue)
     
     def to_python(self, indent=0):
-        return "    " * indent + "droid.set_main_led(Color(r=" + str(self.red) + ", g=" + str(self.green) + ", b=" + str(self.blue) + "))"
+        return indent_marker * indent + "droid.set_main_led(Color(r=" + str(self.red) + ", g=" + str(self.green) + ", b=" + str(self.blue) + "))"
 
 
 class SoundStatement:
@@ -59,7 +61,7 @@ class SoundStatement:
         return "SOUND " + str(self.sound)
     
     def to_python(self, indent=0):
-        return "    " * indent + "droid.play_sound(" + str(self.sound) + ")"
+        return indent_marker * indent + "droid.play_sound(" + str(self.sound) + ")"
 
 
 class DeclareStatement:
@@ -72,7 +74,7 @@ class DeclareStatement:
         return "DECLARE " + str(self.name) + " " + str(self.value)
     
     def to_python(self, indent=0):
-        return "    " * indent + str(self.name) + " = " + str(self.value)
+        return indent_marker * indent + str(self.name) + " = " + str(self.value)
 
 
 class AssignStatement:
@@ -85,7 +87,7 @@ class AssignStatement:
         return "ASSIGN " + str(self.name) + " " + str(self.value)
     
     def to_python(self, indent=0):
-        return "    " * indent + str(self.name) + " = " + str(self.value)
+        return indent_marker * indent + str(self.name) + " = " + str(self.value)
 
 
 class IfStatement:
@@ -98,7 +100,7 @@ class IfStatement:
         return "IF " + str(self.condition) + " THEN\n" + "\n".join(map(str, self.body)) + "\nEND"
     
     def to_python(self, indent=0):
-        return "    " * indent + "if " + str(self.condition) + ":\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body))
+        return indent_marker * indent + "if " + str(self.condition) + ":\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body))
 
 
 class ElseStatement:
@@ -110,7 +112,7 @@ class ElseStatement:
         return "ELSE\n" + "\n".join(map(str, self.body)) + "\nEND"
     
     def to_python(self, indent=0):
-        return "    " * indent + "else:\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body))
+        return indent_marker * indent + "else:\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body))
 
 
 class CompareExpression:
@@ -162,7 +164,7 @@ class LoopUntil:
         return "LOOP UNTIL " + str(self.condition) + " DO\n" + "\n".join(map(str, self.body)) + "\nEND"
     
     def to_python(self, indent=0):
-        return "    " * indent + "while not " + str(self.condition) + ":\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body))
+        return indent_marker * indent + "while not " + str(self.condition) + ":\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body))
 
 
 class LoopTimes:
@@ -175,7 +177,7 @@ class LoopTimes:
         return "LOOP TIMES " + str(self.times) + " DO\n" + "\n".join(map(str, self.body)) + "\nEND"
     
     def to_python(self, indent=0):
-        return "    " * indent + "for i in range(" + str(self.times) + "):\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body))
+        return indent_marker * indent + "for i in range(" + str(self.times) + "):\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body))
 
 
 class LoopForever:
@@ -187,4 +189,4 @@ class LoopForever:
         return "LOOP FOREVER DO\n" + "\n".join(map(str, self.body)) + "\nEND"
     
     def to_python(self, indent=0):
-        return "    " * indent + "while True:\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body))
+        return indent_marker * indent + "while True:\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body))
