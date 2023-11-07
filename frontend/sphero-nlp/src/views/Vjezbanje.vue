@@ -50,6 +50,47 @@ export default {
       this.drawIfTrue(ctx, thirdX + 6 * resa, thirdY + 5 * yHeight, 150, yHeight, radius, resa, '#5F61B3', '#463199', ['if', 'true', 'then'], 1);
       this.drawBasicRectangle(ctx, thirdX + 9 * resa, thirdY + 6 * yHeight, 320, yHeight, radius, resa, '#25C7DC', '#14A4BE', ['roll', 0, 'at', 0, 'speed for', '0  ']);
 
+      let forthX = 500;
+      let forthY = 50;
+      this.mainLED(ctx, forthX + 3 * resa, forthY, 130, yHeight, radius, resa, '#43BEAC', '#32F9FF', ['main LED', 0]);
+
+
+    },
+
+    mainLED(ctx, x, y, width, height, radius, resa, color, insideColor, command) {
+      ctx.strokeStyle = insideColor;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 1;
+
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);                                // ovo je prva tacka, nakon luka
+
+      ctx.lineTo(x + 3 * resa, y);
+      ctx.lineTo(x + 4 * resa, y + resa);
+      ctx.lineTo(x + 6 * resa, y + resa);
+      ctx.lineTo(x + 7 * resa, y);        // ovo sve je bila gornja pipa
+      ctx.arc(x + width,  y + (height/2), height/2, -Math.PI / 2, Math.PI / 2, false); // Arc for a semicircle
+      
+      //ctx.lineTo(x + radius, y + height);                       // donja linija
+      ctx.lineTo(x  + 7 * resa, y + height);
+      ctx.lineTo(x + 6 * resa, y + height + resa);
+      ctx.lineTo(x + 4 * resa, y + height + resa);
+      ctx.lineTo(x + 3 * resa, y + height);
+
+      ctx.arcTo(x, y + height, x, y + height - radius, radius); // donji lijevi luk
+      ctx.lineTo(x, y + radius);                                // lijeva linija
+      ctx.arcTo(x, y, x + radius, y, radius);                   // gornji lijevi luk
+      ctx.closePath();
+
+      ctx.stroke();
+      ctx.fill();
+
+      ctx.fillStyle = 'white';
+      ctx.font = '17px Arial';
+
+      ctx.fillText(command[0], x + resa, y + height /1.6);
+      //this.drawInsideRec(ctx, insideColor, x + 80, y, height, command[1] + '°');
+      this.drawInsideOctagon(ctx, insideColor, x + 110, y, height);
     },
 
 
@@ -374,9 +415,30 @@ drawInsideHexagon(ctx, insideColor, x, y, height, keyword) {
       const textX = x - 3;
       const textY = y + height;
       ctx.fillText(keyword, textX, textY);
-
-
     },
+
+    drawInsideOctagon(ctx, insideColor, x, y, height) {
+      ctx.beginPath();
+      
+      y = y + height / 7;
+      height = height * 0.4
+      let width = height;
+
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + width, y);
+      ctx.lineTo(x + width * 1.6, y + height * 0.6);
+      ctx.lineTo(x + width * 1.6, y + height * 1.2);
+      ctx.lineTo(x + width, y + height * 1.8);
+      ctx.lineTo(x, y + height * 1.8);
+      ctx.lineTo(x - width * 0.6, y + height * 1.2);
+      ctx.lineTo(x - width * 0.6, y + height * 0.6);
+      ctx.lineTo(x, y);
+      
+      ctx.closePath();
+      ctx.fillStyle = insideColor;  
+      ctx.fill();
+    },
+
 
 
     drawBasicRectangle(ctx, x, y, width, height, radius, resa, color, insideColor, command) {
