@@ -1,0 +1,30 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+139823120331200 -> 139823120332544 [label="commands:0" arrowtail=diamond dir=both]
+139823120332544[label="{:RollStatement|+degrees:int=0\l+speed:int=100\l+seconds:int=10\l}"]
+139823120331200 -> 139823120331632 [label="commands:1" arrowtail=diamond dir=both]
+139823120331632 -> 139823120332496 [label="body:0" arrowtail=diamond dir=both]
+139823120332496 -> 139823120331872 [label="value" arrowtail=diamond dir=both]
+139823120331872[label="{:Random|+min:int=1\l+max:int=5\l}"]
+139823120332496[label="{B:DeclareStatement|}"]
+139823120331632 -> 139823120332448 [label="body:1" arrowtail=diamond dir=both]
+139823120332448 -> 139823120332304 [label="condition" arrowtail=diamond dir=both]
+139823120332304[label="{:CompareExpression|+left:str='B'\l+op:str='\>'\l+right:int=10\l}"]
+139823120332448 -> 139823120332400 [label="body:0" arrowtail=diamond dir=both]
+139823120332400[label="{:RollStatement|+degrees:int=90\l+speed:int=50\l+seconds:int=5\l}"]
+139823120332448[label="{:IfStatement|}"]
+139823120331632[label="{:LoopTimes|+times:int=5\l}"]
+139823120331200[label="{:Program|}"]
+
+}
