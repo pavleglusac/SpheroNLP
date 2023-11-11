@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar.vue'
   <main>
     <Navbar />
     <div class="d-flex" style="height:90%;">
-        <div class="w-50" style="height: 100%; border-right: 2px solid black;">
+        <div id="maze-div" class="w-50" style="height: 100%; border-right: 2px solid black;">
             <div class="h-100" style="display: flex; flex-direction: column;" ref="cont1">
                 <div class="box p-3" ref="topBox1" style="height: 30%;" id="topBox1">
                     <h3>
@@ -24,7 +24,7 @@ import Navbar from '../components/Navbar.vue'
                 </div>
             </div>
         </div>
-        <div class="w-50" style="height: 100%;">
+        <div id="code-div" class="w-50" style="height: 100%;">
             <div class="h-100" style="display: flex; flex-direction: column;" ref="cont2">
                 <div class="box p-1" ref="topBox2" style="height: 50%;" id="topBox2">
                     <Chat />
@@ -67,6 +67,15 @@ async function startProgram() {
   background: #000;
   cursor: ns-resize;
 }
+
+#maze-div {
+  flex: 0 0 40%; /* flex-grow, flex-shrink, flex-basis */
+}
+
+#code-div {
+  flex: 0 0 60%; /* flex-grow, flex-shrink, flex-basis */
+}
+
 </style>
 
 <script>
