@@ -15,3 +15,16 @@ mm = metamodel_from_file(full_grammar_path, classes=classes)
 
 def parse(text):
     return mm.model_from_str(text)
+
+
+
+file_path = 'intermediate.txt'
+with open(file_path, 'r') as file:
+    file_content = file.read()
+
+model = mm.model_from_str(file_content)
+print(model.to_python())
+print("--------------------------")
+print(model.to_javascript())
+print("--------------------------")
+print(model.to_codeblocks())
