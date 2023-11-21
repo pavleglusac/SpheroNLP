@@ -43,6 +43,7 @@ import axios from 'axios';
         methods: {
             async sendMessage(direction) {
                 let code = await this.sendRequest();
+                this.$eventBus.emit('code', code);
                 this.$emit('newMessage', code);
                 this.addToChat(direction);
             },
@@ -53,13 +54,16 @@ import axios from 'axios';
 
             async sendRequest() {
                 try {
-                    const response = await axios.get('http://localhost:5000/api/data');
+                    const response = await axios.post('http://localhost:8000/translate', {
+                        text: this.youMessage
+                    });
+                    console.log(response.data);
                     return response.data;
                 } catch (error) {
                     console.error('Error fetching data:', error);
                     throw error;
                 }
-                },
+            },
 
             addToChat(direction) {
                 if (!this.youMessage && !this.bobMessage) {

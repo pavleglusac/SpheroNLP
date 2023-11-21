@@ -47,6 +47,14 @@ class MockTranslator:
         text = f"""
 BEGIN
     ROLL 0 DEGREES AT 100 SPEED FOR 10 SECONDS
+    LED 255 255 255
+    LOOP TIMES 5 DO
+        LET B = 5
+        IF B > 10 THEN
+            ROLL 90 DEGREES AT 50 SPEED FOR 5 SECONDS
+        END
+    END
+    LED 255 255 255
 END
 """
         return text

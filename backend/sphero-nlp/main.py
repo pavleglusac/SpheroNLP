@@ -9,6 +9,11 @@ from translator.translators import ChatGPTTranslator, MockTranslator
 from language import Language, parser
 import sys
 
+from pydantic import BaseModel
+
+class TranslationRequest(BaseModel):
+    text: str
+
 app = FastAPI()
 
 app.add_middleware(
@@ -35,17 +40,19 @@ async def root():
 
 
 @app.post("/translate")
-async def generate(text=Body(embed=True)):
+async def generate(request: TranslationRequest):
+    text = request.text
     code = text_translator.translate(text)
     code_model = parser.parse(code)
-    return str(code_model)
+    return [code_model.to_javascript(), code_model.to_codeblocks()]
 
 
 @app.post("/execute")
 async def execute(text=Body(embed=True)):
     code = text_translator.translate(text)
     code_model = parser.parse(code)
-    return execute_code(code_model)
+    execute_code(code_model)
+    return [code_model.to_javascript(), code_model.to_codeblocks()]
 
 
 if __name__ == "__main__":

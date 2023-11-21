@@ -7,10 +7,16 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 
+// emitter from mitt
+import mitt from 'mitt'
+const emitter = mitt()
+
 const app = createApp(App)
 
 app.use(router)
 app.use(VueHighlightJS);
+
+app.config.globalProperties.$eventBus = emitter
 
 app.mount('#app')
 
