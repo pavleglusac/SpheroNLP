@@ -27,10 +27,10 @@ with SpheroEduAPI(toy) as droid:
 
         return """
 async function startProgram()  { 
-""" + "\n".join(map(lambda x: x.to_javascript(indent + 1), self.commands)) + "\nexitProgram();"
+""" + "\n".join(map(lambda x: x.to_javascript(indent + 1), self.commands)) + "\n" + indent_marker + "exitProgram();\n}"
 
     def to_codeblocks(self):
-        return "".join(map(lambda x: x.to_codeblocks() + '\n', self.commands))
+        return "".join(map(lambda x: x.to_codeblocks() + ',', self.commands))
 
 
 class RollStatement:
@@ -152,7 +152,7 @@ class IfStatement:
             map(lambda x: x.to_javascript(indent + 1), self.body)) + "\n" + indent_marker * indent + "}"
 
     def to_codeblocks(self):
-        return str(["if", get_body_lines_count(self.body)]) + '\n' + ''.join(self.condition.to_codeblocks()) + '\n' + '\n'.join(map
+        return str(["if", get_body_lines_count(self.body)]) + ',' + ''.join(self.condition.to_codeblocks()) + ',' + ','.join(map
                (lambda x: x.to_codeblocks(), self.body))
 
 
@@ -267,7 +267,7 @@ class LoopTimes:
             map(lambda x: x.to_javascript(indent + 1), self.body)) + "\n" + indent_marker * indent + "}"
 
     def to_codeblocks(self):
-        return str(["loopTimes", self.times, get_body_lines_count(self.body)]) + '\n'+ '\n'.join(map
+        return str(["loopTimes", self.times, get_body_lines_count(self.body)]) + ','+ ','.join(map
                 (lambda x: x.to_codeblocks(), self.body))
 
 

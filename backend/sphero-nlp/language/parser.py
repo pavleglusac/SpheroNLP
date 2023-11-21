@@ -17,14 +17,14 @@ def parse(text):
     return mm.model_from_str(text)
 
 
+if __name__ == "__main__":
+    file_path = 'intermediate.txt'
+    with open(file_path, 'r') as file:
+        file_content = file.read()
 
-file_path = 'intermediate.txt'
-with open(file_path, 'r') as file:
-    file_content = file.read()
-
-model = mm.model_from_str(file_content)
-print(model.to_python())
-print("--------------------------")
-print(model.to_javascript())
-print("--------------------------")
-print(model.to_codeblocks())
+    model = mm.model_from_str(file_content)
+    print(model.to_python())
+    print("--------------------------")
+    print(model.to_javascript())
+    print("--------------------------")
+    print(model.to_codeblocks())

@@ -17,7 +17,7 @@ import Navbar from '../components/Navbar.vue'
             <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
             <!-- add a button and center it -->
             <div class="d-grid gap-2 col-6 mx-auto mt-5">
-              <router-link to="/courses" class="btn btn-primary btn-lg">Kursevi</router-link>
+              <router-link to="/problem/0" class="btn btn-primary btn-lg">Kursevi</router-link>
             </div>
           </div>
         </div>
@@ -32,11 +32,12 @@ import Navbar from '../components/Navbar.vue'
             <p class="card-text" style="font-size: x-large; font-weight: 600;">
               Pogledajte lekcije "Učenje programiranja pomoću Sphero robota" Tare Pogančev kojima ćete savladali Sphero! 👇
             </p>
-            <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
-            <!-- add a button and center it -->
             <div class="d-grid gap-2 col-6 mx-auto mt-5">
-              <router-link to="/courses" class="btn btn-primary btn-lg">Lekcije</router-link>
+              <a href="https://www.youtube.com/watch?v=UXwSec4XQA4&list=PLJTB8EiachRjYkP5tM5pXU9icKZA378u3" class="btn btn-primary btn-lg d-block w-100">
+                Lekcije
+              </a>
             </div>
+
           </div>
         </div>
         <div class="col-md-6">
@@ -59,8 +60,11 @@ import Navbar from '../components/Navbar.vue'
             <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
             <!-- add a button and center it -->
             <div class="d-grid gap-2 col-6 mx-auto mt-5">
-              <router-link to="#" class="btn btn-primary btn-lg">Sajt</router-link>
+              <a href="https://edu.sphero.com/sphero/home" class="btn btn-primary btn-lg d-block w-100">
+                Sajt
+              </a>
             </div>
+            
           </div>
         </div>
       </div>

@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
     export default {
         data() {
             return {
@@ -25,21 +27,45 @@
                         body: 'Dobrodošli, ja sam SpheroBot! Tu sam da pretvorim Vaše rečenice u programski kod!',
                         author: 'bob'
                     },
-                    {
+                    /*{
                         body: 'U redu, idi dole jedno 50cm, zatim se rotiraj za 90 stepeni ulevo i idi pravo 1m.',
                         author: 'you'
                     },
                     {
                         body: 'Izvršavam...',
                         author: 'bob'
-                    }
+                    }*/
                 ],
                 bobMessage: '',
                 youMessage: ''
             }
         },
         methods: {
-            sendMessage(direction) {
+            async sendMessage(direction) {
+                let code = await this.sendRequest();
+                this.$eventBus.emit('code', code);
+                this.$emit('newMessage', code);
+                this.addToChat(direction);
+            },
+
+            clearAllMessages() {
+                this.messages = []
+            },
+
+            async sendRequest() {
+                try {
+                    const response = await axios.post('http://localhost:8000/translate', {
+                        text: this.youMessage
+                    });
+                    console.log(response.data);
+                    return response.data;
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    throw error;
+                }
+            },
+
+            addToChat(direction) {
                 if (!this.youMessage && !this.bobMessage) {
                     return
                 }
@@ -55,9 +81,6 @@
                 this.$nextTick(() => {
                     this.$refs.chatArea.scrollTop = this.$refs.chatArea.scrollHeight;
                 });
-            },
-            clearAllMessages() {
-                this.messages = []
             }
         }
     }
