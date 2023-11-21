@@ -8,7 +8,8 @@
         </section>
         <div style="display: flex; justify-content: center; margin-top: -5%;">
             <div class="input-group w-75" style="">
-                <input type="text" class="form-control rounded-extra" placeholder="Type your message..." aria-label="Chat message input" v-model="youMessage">
+                <input type="text" class="form-control rounded-extra" placeholder="Type your message..." 
+                aria-label="Chat message input" v-model="youMessage" @keydown.enter.prevent="sendMessage('out')">
                 <button class="btn btn-primary rounded-end" type="button" @click="sendMessage('out')">Send</button>
             </div>
         </div>
@@ -51,6 +52,9 @@
                 } else {
                     alert('something went wrong')
                 }
+                this.$nextTick(() => {
+                    this.$refs.chatArea.scrollTop = this.$refs.chatArea.scrollHeight;
+                });
             },
             clearAllMessages() {
                 this.messages = []
@@ -89,4 +93,5 @@
   display: flex;
   justify-content: space-between;
 }
+
 </style>
