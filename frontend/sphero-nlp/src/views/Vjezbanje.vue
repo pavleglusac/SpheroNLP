@@ -1,3 +1,5 @@
+
+
 <template>
   <div>
     <canvas ref="customCanvas"></canvas>
@@ -5,9 +7,11 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   mounted() {
     this.drawCustomShape();
+
   },
   methods: {
     drawCustomShape() {
@@ -16,7 +20,7 @@ export default {
       const ctx = canvas.getContext('2d');
       const resa = 7
       const radius = 5
-      const height = 50;
+      const height = 45;
       const blue = {insideColor: "#14A4BE", outlineColor: "#25C7DC"}
       const violet = {insideColor: "#463199", outlineColor: "#5F61B3"}
       const violetInverse = {insideColor: "#5F61B3", outlineColor: "#463199"}
@@ -643,7 +647,7 @@ export default {
       let firstY = 50;
 
       // osnovno
-      let p1 = new Params(firstX, firstY, 130);
+      /*let p1 = new Params(firstX, firstY, 130);
       let p2 = new Params(firstX, firstY + 1 * height, 200);
       let p3 = new Params(firstX, firstY + 2 * height, 150);
       let p4 = new Params(firstX, firstY + 3 * height, 170, ['MWin', "===", 1])
@@ -752,12 +756,12 @@ export default {
       let pRoll32 = new Params(thirdX + 9 * resa, thirdY + 6 * height, 320, [ 0, 0, '0']);
       let oRoll32 = new RollComponent(pRoll32);
       oRoll32.drawBody();
-      oRoll32.writeContent();
+      oRoll32.writeContent();*/
 
 
 ///////////////////////////////// sad krece pravo
-      let startX = 100;
-      let startY = 800;
+      let startX = 0;
+      let startY = 25;
       /*let data = [['roll', 0, 100, 10],
       ['led', 255, 255, 255],
       ['loopTimes', 5, 4],
