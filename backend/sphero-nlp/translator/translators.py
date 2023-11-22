@@ -46,18 +46,18 @@ class MockTranslator:
     def translate(self, message):
         text = f"""
 BEGIN
-    ROLL 0 DEGREES AT 200 SPEED FOR 7 SECONDS
+    ROLL 0 DEGREES AT 50 SPEED FOR 3 SECONDS
     LED 0 0 255
     LOOP TIMES 5 DO
         LET B = 11
         LED 255 0 255
         IF B > 10 THEN
-            ROLL 90 DEGREES AT 25 SPEED FOR 5 SECONDS
+            ROLL 90 DEGREES AT 25 SPEED FOR 1 SECONDS
         END
         LED 0 0 255
     END
     LED 0 0 255
-    ROLL 180 DEGREES AT 150 SPEED FOR 7 SECONDS
+    ROLL 180 DEGREES AT 150 SPEED FOR 1 SECONDS
 END
 """
         return text

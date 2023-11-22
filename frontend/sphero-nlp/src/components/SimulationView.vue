@@ -49,11 +49,18 @@ export default {
         robot.mass = 1;
 
         var groundA = Bodies.rectangle(0, 150, 600, 30, { isStatic: true });
+        console.log(groundA.friction);
+        groundA.friction = 0;
         var groundB = Bodies.rectangle(450, 0, 30, 570, { isStatic: true });
+        groundB.friction = 0;
         var groundC = Bodies.rectangle(450, 300, 630, 30, { isStatic: true });
+        groundC.friction = 0;
         var groundD = Bodies.rectangle(750, 230, 30, 150, { isStatic: true });
+        groundD.friction = 0;
         var groundE = Bodies.rectangle(680, 170, 150, 30, { isStatic: true });
+        groundE.friction = 0;
         var groundF = Bodies.rectangle(450, 500, 30, 150, { isStatic: true });
+        groundF.friction = 0;
 
         const goal = Bodies.rectangle(660, 240, 50, 50, {
             render: {
@@ -196,6 +203,10 @@ export default {
 
 
         Render.run(render);
+
+        // set friction to zero
+        robot.frictionAir = 0;
+        robot.friction = 1;
 
         
         var runner = Runner.create();

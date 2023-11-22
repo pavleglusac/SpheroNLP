@@ -1,5 +1,3 @@
-
-
 export function executeCode(code, vue_context) {
     let variables = {};
 
