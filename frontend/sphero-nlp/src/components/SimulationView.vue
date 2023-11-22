@@ -6,6 +6,9 @@
   
 <script>
 import Matter from "matter-js";
+import { executeCode } from './block_code_executor.js';
+
+
 
 export default {
 
@@ -44,7 +47,6 @@ export default {
 
         // set weight to 1
         robot.mass = 1;
-
 
         var groundA = Bodies.rectangle(0, 150, 600, 30, { isStatic: true });
         var groundB = Bodies.rectangle(450, 0, 30, 570, { isStatic: true });
@@ -155,7 +157,42 @@ export default {
             });
         });
 
+        this.$eventBus.on('code', async (code) => {
+            console.log(code);
+            await executeCode(code, this);
+        })
 
+        this.$eventBus.on('roll', (params) => {
+            console.log(params);
+            let degrees = params['degrees'];
+            let speed = params['speed'];
+            let seconds = params['seconds'];
+            console.log(degrees, speed, seconds);
+
+            speed = 4 * (speed / 255);
+            
+            degrees = degrees * Math.PI / 180;
+
+            const velocity = {
+                x: Math.cos(robot.angle + degrees) * speed,
+                y: Math.sin(robot.angle + degrees) * speed
+            };
+            console.log(velocity);
+            Body.setVelocity(robot, velocity);
+            setTimeout(() => {
+                Body.setVelocity(robot, { x: 0, y: 0 });
+            }, seconds * 1000);
+
+        });
+
+        
+        this.$eventBus.on('led', (params) => {
+            let r = params['r'];
+            let g = params['g'];
+            let b = params['b'];
+            console.log(r, g, b);
+            robot.render.fillStyle = `rgb(${r}, ${g}, ${b})`;
+        });
 
 
         Render.run(render);

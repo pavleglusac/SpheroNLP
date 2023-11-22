@@ -46,18 +46,36 @@ class MockTranslator:
     def translate(self, message):
         text = f"""
 BEGIN
-    ROLL 0 DEGREES AT 100 SPEED FOR 10 SECONDS
-    LED 255 255 255
+    ROLL 0 DEGREES AT 200 SPEED FOR 7 SECONDS
+    LED 0 0 255
     LOOP TIMES 5 DO
-        LET B = 5
+        LET B = 11
+        LED 255 0 255
         IF B > 10 THEN
-            ROLL 90 DEGREES AT 50 SPEED FOR 5 SECONDS
+            ROLL 90 DEGREES AT 25 SPEED FOR 5 SECONDS
         END
+        LED 0 0 255
     END
-    LED 255 255 255
+    LED 0 0 255
+    ROLL 180 DEGREES AT 150 SPEED FOR 7 SECONDS
 END
 """
         return text
+    
+
+# BEGIN
+#     ROLL 0 DEGREES AT 100 SPEED FOR 10 SECONDS
+#     LED 0 0 255
+#     LOOP TIMES 5 DO
+#         LET B = 11
+#         LED 255 0 255
+#         IF B > 10 THEN
+#             ROLL 90 DEGREES AT 25 SPEED FOR 5 SECONDS
+#         END
+#         LED 0 0 255
+#     END
+#     LED 0 0 255
+# END
     
 
 # for now, the script behavior is the same as the module behavior
