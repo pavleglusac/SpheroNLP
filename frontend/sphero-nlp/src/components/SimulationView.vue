@@ -1,5 +1,5 @@
 <template>
-    <div class="content" style="height: 50%;">
+    <div class="content" style="height: 70%;">
       <div id="drawhere" style="max-width: 100%; max-height: 100%;"></div>
     </div>
 </template>
@@ -36,31 +36,53 @@ export default {
             engine: engine,
             options: {
                 width: 900,
-                height: 540,
+                height: 680,
                 background: 'white',
                 wireframes: false
             }
         });
 
         // create two boxes and a ground
-        var robot = Bodies.circle(60, 60, 40);
+        var robot = Bodies.circle(45, 45, 30);
 
         // set weight to 1
         robot.mass = 1;
 
-        var groundA = Bodies.rectangle(0, 150, 600, 30, { isStatic: true });
-        console.log(groundA.friction);
-        groundA.friction = 0;
-        var groundB = Bodies.rectangle(450, 0, 30, 570, { isStatic: true });
-        groundB.friction = 0;
-        var groundC = Bodies.rectangle(450, 300, 630, 30, { isStatic: true });
-        groundC.friction = 0;
-        var groundD = Bodies.rectangle(750, 230, 30, 150, { isStatic: true });
-        groundD.friction = 0;
-        var groundE = Bodies.rectangle(680, 170, 150, 30, { isStatic: true });
-        groundE.friction = 0;
-        var groundF = Bodies.rectangle(450, 500, 30, 150, { isStatic: true });
-        groundF.friction = 0;
+        var grounds = [];
+
+        var ground_params = [
+            [0, 100, 500, 20],
+            [400, 0, 20, 440],
+            [260, 220, 300, 20],
+            [0, 350, 500, 20],
+            [650, 350, 500, 20],
+            [150, 580, 900, 20],
+            [380, 520, 20, 100],
+            [265, 470, 250, 20],
+
+            //square
+            [680, 80, 150, 20],
+            [680, 220, 150, 20],
+            [615, 150, 20, 150],
+            [745, 150, 20, 150],
+
+            [510, 400, 20, 120],
+            [800, 480, 220, 20],
+
+            // sorrounding
+            [450, 0, 900, 20],
+            [450, 680, 900, 20],
+            [0, 340, 20, 680],
+            [900, 340, 20, 680],
+
+
+        ];
+
+        for (var i = 0; i < ground_params.length; i++) {
+            var ground = Bodies.rectangle(...ground_params[i], { isStatic: true });
+            ground.friction = 0;
+            grounds.push(ground);
+        }
 
         const goal = Bodies.rectangle(660, 240, 50, 50, {
             render: {
@@ -85,8 +107,6 @@ export default {
                 y: Math.sin(body.angle) * speed
             };
         }
-
-
 
         // set boxA to be yellow
         robot.render.fillStyle = '#0093D0';
@@ -137,7 +157,7 @@ export default {
 
 
         // add all of the bodies to the world
-        Composite.add(engine.world, [robot, groundA, groundB, groundC, groundD, groundE, groundF, goal]);
+        Composite.add(engine.world, [robot, ...grounds]);
 
         
         Matter.Events.on(render, 'afterRender', function() {

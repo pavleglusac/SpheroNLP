@@ -12,12 +12,12 @@ import Navbar from '../components/Navbar.vue'
         </div>
         <div class="col-md-6" style="background-color: rgb(179, 148, 108); color: aliceblue;">
           <div class="card-body">
-            <h2 class="card-title" style="font-weight: bold;">Sphero Kurs</h2>
-            <p class="card-text" style="font-size: x-large; font-weight: 600;">Započnite svoje Sphero putovanje rešavanjem interaktivnih kurseva klikom na link ispod 👇</p>
+            <h2 class="card-title" style="font-weight: bold;">Sphero Lekcije</h2>
+            <p class="card-text" style="font-size: x-large; font-weight: 600;">Započnite svoje Sphero putovanje rešavanjem interaktivnih lekcija klikom na link ispod 👇</p>
             <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
             <!-- add a button and center it -->
             <div class="d-grid gap-2 col-6 mx-auto mt-5">
-              <router-link to="/problem/0" class="btn btn-primary btn-lg">Kursevi</router-link>
+              <router-link to="/lessons" class="btn btn-primary btn-lg">Lekcije</router-link>
             </div>
           </div>
         </div>
@@ -28,7 +28,7 @@ import Navbar from '../components/Navbar.vue'
       <div class="row g-0">
         <div class="col-md-6" style="background-color: rgb(92, 179, 219); color: aliceblue;">
           <div class="card-body">
-            <h2 class="card-title" style="font-weight: bold;">YouTube Lekcije</h2>
+            <h2 class="card-title" style="font-weight: bold;">YouTube Tutorijali</h2>
             <p class="card-text" style="font-size: x-large; font-weight: 600;">
               Pogledajte lekcije "Učenje programiranja pomoću Sphero robota" Tare Pogančev kojima ćete savladali Sphero! 👇
             </p>

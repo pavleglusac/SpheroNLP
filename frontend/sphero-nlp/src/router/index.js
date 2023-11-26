@@ -11,7 +11,13 @@ const router = createRouter({
     },
     {
       // dynamic route problem/id
-      path: '/problem/:id',
+      path: '/lessons',
+      name: 'lessons',
+      component: () => import('../views/LessonsView.vue')
+    },
+    {
+      // dynamic route problem/id
+      path: '/problem/:chapter_id/:task_id',
       name: 'problem',
       component: () => import('../views/ProblemView.vue')
     },

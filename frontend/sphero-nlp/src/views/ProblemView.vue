@@ -14,21 +14,23 @@ import SimulationView from '../components/SimulationView.vue';
             <div class="h-100" style="display: flex; flex-direction: column;" ref="cont1">
                 <div class="box p-3" ref="topBox1" style="height: 30%; overflow: auto;" id="topBox1">
                     <h3>
-                        Problem broj {{ +$route.params.id + 1}}
+                        Problem broj {{ currentChapterIndex + 1 }}.{{ currentTaskIndex + 1 }}: {{ task.name }}
                     </h3>
                     <p>
                         {{ task.description }}
                     </p>
 
+                    <img v-if="task.image" :src="'/src/assets/tasks/' + task.image" style="max-height: 200px; max-width: 200px;" class="mx-auto" />
+
                     <!-- Navigation Arrows -->
-                    <div class="navigation-arrows-container d-flex justify-content-end">
+                    <!-- <div class="navigation-arrows-container d-flex justify-content-end">
                         <button  @click="listTask(-1)" :disabled="currentTaskIndex === 0" class="btn btn-light">
                             <i class="bi bi-arrow-left-circle-fill fs-3" style="color: green;"></i>
                         </button>
                         <button @click="listTask(1)" :disabled="currentTaskIndex === tasks.length - 1" class="btn btn-light">
                             <i class="bi bi-arrow-right-circle-fill fs-3" style="color: green;"></i>
                         </button>
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="resizer" @mousedown="startResize" id="resizer-left"></div>
@@ -99,46 +101,23 @@ import SimulationView from '../components/SimulationView.vue';
 </style>
 
 <script>
+import lessons from "../data/lessons.json";
 export default {
+    mounted() {
+
+
+    },
     data() {
         return {
-            tasks: [
-                {
-                    id: 0,
-                    description: `Potrebno je da se krećete napred do desnog kraja lavirinta, zatim da promenite boju sijalice 
-                    u vašu omiljenu, a zatim se vratite na početnu poziciju `,
-                    imageUrl: "https://as2.ftcdn.net/jpg/01/36/00/76/1000_F_136007620_CnJyQqcd3giJLsJGsHsLEXl5E9oA56X7.jpg",
-                },
-                {
-                    id: 1,
-                    description: `Kreirati promenljivu 'brzina' i dodeliti joj vrednost 20. Zatim se kretati 3 sekunde pravo tom brzinom`,
-                    imageUrl: "https://as2.ftcdn.net/jpg/01/36/00/76/1000_F_136007620_CnJyQqcd3giJLsJGsHsLEXl5E9oA56X7.jpg",
-                },
-                {
-                    id: 2,
-                    description: `Majka vodi sina Peru i ćerku Milicu u prodavnicu igračaka.
-                    Deo prodavnice u koji idu odrediće igra kamen-papir-makaze. Ako Milica pobedi, majka će ih odvesti do dela
-                    sa lutkicama, a ako Pera pobedi, odvešće ih u deo sa sportskim igračkama.
-                    Napisati program koji će pokriti oba slučaja, s tim da će pobednik biti određen nasumično.
-                    `,
-                    imageUrl: "https://as2.ftcdn.net/jpg/01/36/00/76/1000_F_136007620_CnJyQqcd3giJLsJGsHsLEXl5E9oA56X7.jpg",
-                },
-                {
-                    id: 3,
-                    description: `Postavite robotića na početnu zelenu tačku. U ovom zadatku
-                    potrebno je kretati se sivom putanjom a potom 4 puta obići kvadrat
-                    oko narandžaste tačkice. Koristite loop blok! Nakon toga nastaviti
-                    kretanje do crvene tačkice`,
-                    imageUrl: "https://as2.ftcdn.net/jpg/01/36/00/76/1000_F_136007620_CnJyQqcd3giJLsJGsHsLEXl5E9oA56X7.jpg",
-                },
-                {
-                    id: 4,
-                    description: `Neki dodatni`,
-                    imageUrl: "https://as2.ftcdn.net/jpg/01/36/00/76/1000_F_136007620_CnJyQqcd3giJLsJGsHsLEXl5E9oA56X7.jpg",
-                },
-            ],
+            lessons: lessons,
+            currentChapterIndex: 0,
             currentTaskIndex: 0,
-            code: ''
+            code: '',
+            tasks: [],
+            task: {
+                'name': '',
+                'description': ''
+            }
         };
     },
 
@@ -191,7 +170,13 @@ export default {
     },
     computed: {
         task() {
-            this.currentTaskIndex = +this.$route.params.id;
+            this.currentChapterIndex = +this.$route.params.chapter_id;
+            this.currentTaskIndex = +this.$route.params.task_id;
+            this.tasks = lessons[this.currentChapterIndex].tasks;
+            console.log(this.currentChapterIndex + ' ' + this.currentTaskIndex);
+            console.log(this.tasks);
+            this.task = this.tasks[this.currentTaskIndex];
+            console.log(this.task);
             return this.tasks[this.currentTaskIndex] || {};
         }
     },
