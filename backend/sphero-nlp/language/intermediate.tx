@@ -5,7 +5,7 @@ Program:
 ;
 
 Statement:
-    RollStatement | LEDStatement | SoundStatement | DeclareStatement | AssignStatement | IfStatement | LoopStatement
+    RollStatement | LEDStatement | SoundStatement | DeclareStatement | AssignStatement | IfStatement | IfElseStatement | LoopStatement
 ;
 
 Expression:
@@ -44,12 +44,12 @@ AssignStatement:
     'SET' name=ID '=' value=Expression
 ;
 
-IfStatement:
-    'IF' condition=Expression 'THEN' body*=Statement (ElseStatement)? 'END'
+IfElseStatement:
+    'IF' condition=Expression 'THEN' body*=Statement 'ELSE' elsebody*=Statement 'END'
 ;
 
-ElseStatement:
-    'ELSE' body*=Statement
+IfStatement:
+    'IF' condition=Expression 'THEN' body*=Statement 'END'
 ;
 
 LoopStatement:

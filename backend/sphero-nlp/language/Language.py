@@ -29,8 +29,8 @@ with SpheroEduAPI(toy) as droid:
 async function startProgram()  { 
 """ + "\n".join(map(lambda x: x.to_javascript(indent + 1), self.commands)) + "\n" + indent_marker + "exitProgram();\n}"
 
-    def to_codeblocks(self):
-        return "".join(map(lambda x: x.to_codeblocks() + ',', self.commands))
+    def to_codeblocks(self, indent = 0):
+        return "".join(map(lambda x: x.to_codeblocks(indent + 1) + ',', self.commands))
 
 
 class RollStatement:
@@ -52,8 +52,8 @@ class RollStatement:
         return indent_marker * indent + "await roll(" + str(self.degrees) + ", " + str(self.speed) + ", " + str(
             self.seconds) + ");"
 
-    def to_codeblocks(self):
-        return str(['roll', self.degrees, self.speed, self.seconds])
+    def to_codeblocks(self, indent = 0):
+        return str(['roll', indent, self.degrees, self.speed, self.seconds])
 
 
 class LEDStatement:
@@ -74,8 +74,8 @@ class LEDStatement:
         return indent_marker * indent + "set_main_led({ r:" + str(self.red) + ", g:" + str(self.green) + ", b:" + str(
             self.blue) + "});"
 
-    def to_codeblocks(self):
-        return str(['led', self.red, self.green, self.blue])
+    def to_codeblocks(self, indent = 0):
+        return str(['led', indent, self.red, self.green, self.blue])
 
 
 class SoundStatement:
@@ -92,8 +92,8 @@ class SoundStatement:
     def to_javascript(self, indent=0):
         return indent_marker * indent + "await Sound.Game." + str(self.sound) + ".play(true);"
 
-    def to_codeblocks(self):
-        return str(['sound', self.sound])
+    def to_codeblocks(self, indent = 0):
+        return str(['sound', indent, self.sound])
 
 
 class DeclareStatement:
@@ -111,8 +111,8 @@ class DeclareStatement:
     def to_javascript(self, indent=0):
         return indent_marker * indent + "var " + str(self.name) + " = " + str(self.value) + ";"
 
-    def to_codeblocks(self):
-        return str(['declare', self.name, self.value])
+    def to_codeblocks(self, indent = 0):
+        return str(['declare', indent, self.name, self.value])
 
 
 class AssignStatement:
@@ -130,8 +130,8 @@ class AssignStatement:
     def to_javascript(self, indent=0):
         return indent_marker * indent + str(self.name) + " = " + str(self.value) + ";"
 
-    def to_codeblocks(self):
-        return str(["assign", self.name, self.value])
+    def to_codeblocks(self, indent = 0):
+        return str(["assign", indent, self.name, self.value])
 
 
 class IfStatement:
@@ -151,27 +151,55 @@ class IfStatement:
         return indent_marker * indent + "if (" + str(self.condition) + ")   {\n" + "\n".join(
             map(lambda x: x.to_javascript(indent + 1), self.body)) + "\n" + indent_marker * indent + "}"
 
-    def to_codeblocks(self):
-        return str(["if", get_body_lines_count(self.body)]) + ',' + ''.join(self.condition.to_codeblocks()) + ',' + ','.join(map
-               (lambda x: x.to_codeblocks(), self.body))
+    def to_codeblocks(self, indent = 0):
+        return str(["if", indent, get_body_lines_count(self.body)]) + ',' + ''.join(self.condition.to_codeblocks()) + ',' + ','.join(map
+               (lambda x: x.to_codeblocks(indent + 1), self.body))
 
 
-class ElseStatement:
-    def __init__(self, body, parent=None):
+class IfElseStatement:
+    def __init__(self, condition, body, elsebody, parent=None):
         self.parent = parent
+        self.condition = condition
         self.body = body
+        self.elsebody = elsebody
 
     def __str__(self):
-        return "ELSE\n" + "\n".join(map(str, self.body)) + "\nEND"
+        return "IF " + str(self.condition) + " THEN\n" + "\n".join(map(str, self.body)) + "\n ELSE\n" + "\n".join(map(str, self.elsebody)) + "\nEND"
 
     def to_python(self, indent=0):
-        return indent_marker * indent + "else:\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body))
+        return indent_marker * indent + "if " + str(self.condition) + ":\n" + "\n".join(
+            map(lambda x: x.to_python(indent + 1), self.body)) + "\n" + \
+               indent_marker * indent + "else:\n" + "\n".join(
+            map(lambda x: x.to_python(indent + 1), self.elsebody))
 
     def to_javascript(self, indent=0):
-        return indent_marker * indent + "else {\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body)) + "}"
+        return indent_marker * indent + "if (" + str(self.condition) + ")   {\n" + "\n".join(
+            map(lambda x: x.to_javascript(indent + 1), self.body)) + "\n" + indent_marker * indent + "} " + "else   {\n" + "\n".join(
+            map(lambda x: x.to_javascript(indent + 1), self.body)) + "\n" + indent_marker * indent + "}"
 
-    def to_codeblocks(self):
-        return str(["else"])
+    def to_codeblocks(self, indent = 0):
+        return str(["if-else", indent, get_body_lines_count(self.body), get_body_lines_count(self.elsebody)]) + ',' + ''.join(self.condition.to_codeblocks(indent)) + ',' + ','.join(map
+               (lambda x: x.to_codeblocks(indent + 1), self.body)) + ',' + ','.join(map
+               (lambda x: x.to_codeblocks(indent + 1), self.elsebody))
+
+
+# class ElseStatement:
+#     def __init__(self, body, parent=None):
+#         self.parent = parent
+#         self.body = body
+#
+#     def __str__(self):
+#         return "ELSE\n" + "\n".join(map(str, self.body)) + "\nEND"
+#
+#     def to_python(self, indent=0):
+#         return indent_marker * indent + "else:\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body))
+#
+#     def to_javascript(self, indent=0):
+#         return indent_marker * indent + "else {\n" + "\n".join(map(lambda x: x.to_python(indent + 1), self.body)) + "}"
+#
+#     def to_codeblocks(self):
+#         return str(["else"])
+#
 
 class CompareExpression:
     def __init__(self, left, op, right, parent=None):
@@ -189,8 +217,8 @@ class CompareExpression:
     def to_javascript(self, indent=0):
         return str(self.left) + " " + str(self.op) + " " + str(self.right)
 
-    def to_codeblocks(self):
-        return str(['compare', self.left, self.op, self.right])
+    def to_codeblocks(self, indent = 0):
+        return str(['compare', indent, self.left, self.op, self.right])
 
 
 class Random:
@@ -208,8 +236,8 @@ class Random:
     def to_javascript(self, indent=0):
         return "getRandomInt(" + str(self.min) + ", " + str(self.max) + ")"
 
-    def to_codeblocks(self):
-        return str(['random', self.min, self.max])
+    def to_codeblocks(self, indent = 0):
+        return str(['random', indent, self.min, self.max])
 
 class Literal:
     def __init__(self, value, parent=None):
@@ -242,8 +270,8 @@ class LoopUntil:
     def to_javascript(self, indent=0):
         return "vidjecu sta cu pisati ovdje"
 
-    def to_codeblocks(self):
-        return str(['loopUntil', self.condition])
+    def to_codeblocks(self, indent = 0):
+        return str(['loopUntil', indent, self.condition])
 
 
 
@@ -266,9 +294,9 @@ class LoopTimes:
         return indent_marker * indent + "for (var i = 0; i < " + str(self.times) + "; ++i) {\n" + "\n".join(
             map(lambda x: x.to_javascript(indent + 1), self.body)) + "\n" + indent_marker * indent + "}"
 
-    def to_codeblocks(self):
-        return str(["loopTimes", self.times, get_body_lines_count(self.body)]) + ','+ ','.join(map
-                (lambda x: x.to_codeblocks(), self.body))
+    def to_codeblocks(self, indent = 0):
+        return str(["loopTimes", indent, self.times, get_body_lines_count(self.body)]) + ','+ ','.join(map
+                (lambda x: x.to_codeblocks(indent + 1), self.body))
 
 
 
@@ -287,14 +315,14 @@ class LoopForever:
         return "while (true) {\n" + "\n".join(
             map(lambda x: x.to_python(indent + 1), self.body)) + "\n" + indent_marker * indent + "}"
 
-    def to_codeblocks(self):
-        return str(["loopForver", get_body_lines_count(self.body)])
+    def to_codeblocks(self, indent = 0):
+        return str(["loopForver", indent, get_body_lines_count(self.body), map(lambda x: x.to_codeblocks(indent + 1), self.body)])
 
 
 def get_body_lines_count(body):
     ret_val = len(body)
     for command in body:
-        ret_val += str(command).count('\n')
+        ret_val += str(command).count('\n') #- str(command).count('END')
     return ret_val
 
 # a = ["ovo je moj novi tekst \n i on bi trebalo da \n ima 3 nova reda", 'jedan red']

@@ -30,7 +30,6 @@ export default {
       const pink = {insideColor: '#AA325F',  outlineColor:'#D54077'}
       const darkPink = {insideColor: '#5C2042',  outlineColor:'#95376C'}
       
-      
 
       class Params {
         constructor(xStart, yStart, width, content, linesNum = -1) {
@@ -635,7 +634,9 @@ export default {
           this.p.ctx.fillStyle = 'white';
           this.p.ctx.fillText("if", this.p.x - this.p.resa * 2, this.p.y + this.p.height /1.6);
           this.drawInsideHexagon(this.p.ctx, this.p.color.insideColor, this.p.x - this.p.resa * 3 + 50, this.p.y, this.p.height, 'true');
-          this.p.ctx.fillText("then", this.p.x + 72, this.p.y + this.p.height /1.6);
+          this.p.ctx.fillText("then", this.p.x + 230, this.p.y + this.p.height /1.6);
+          this.p.ctx.fillText("else", this.p.x - this.p.resa * 2, this.p.y + this.p.height * this.p.linesNum);
+
         }
       }
 
@@ -650,10 +651,10 @@ export default {
       /*let p1 = new Params(firstX, firstY, 130);
       let p2 = new Params(firstX, firstY + 1 * height, 200);
       let p3 = new Params(firstX, firstY + 2 * height, 150);
-      let p4 = new Params(firstX, firstY + 3 * height, 170, ['MWin', "===", 1])
-      let p5 = new Params(firstX, firstY + 4 * height, 150, '', 2);
+      let p4 = new Params(firstX, firstY + 3 * height, 170, ['MWin', "===", 1])*/
+      let p5 = new Params(firstX + 500, firstY + 4 * height, 150, '', 2);
 
-      let o1 = new StartComponent(p1);
+      /*let o1 = new StartComponent(p1);
       o1.drawBody();
       o1.writeContent();
       let o2 = new TextComponent(p2);
@@ -669,7 +670,7 @@ export default {
       o5.drawBody();
       o5.writeContent();
 
-
+*/
       // Pavlov primjer
       let secondX = 500;
       let secondY = 100;
@@ -717,8 +718,7 @@ export default {
       let oSound = new SoundComponent(pSound);
       oSound.drawBody();
       oSound.writeContent();
-    
-
+    /*
       //treca skupina
       let thirdX = 1000;
       let thirdY = 50;
@@ -759,8 +759,47 @@ export default {
       oRoll32.writeContent();*/
 
 
+      class BiloSta {
+
+        translate(y, position, offset) {
+          for (let i = position; i<y.length; i++)
+          {
+            y[i] += offset
+          }
+          return y;
+        }
+
+
+        getOffsets(data) {
+          let y = [];
+          for (let j = 0; j <= data.length; j++) {
+              y.push(j);
+          }
+          
+          for (let i = 0; i<data.length; i++) {
+            // sad ako je slozena treba da pomjerim gore, a ako je jednostavna, treba da spustim sve lancano dole
+            
+            if (data[i][0].includes("loop") || data[i][0].includes("if")) {
+              //pomjeri za +1
+              let scope = data[i][data[i].length - 1]; 
+              y = this.translate(y, i + 2 + scope, 1);
+              // ovdje dodati jos +1 za else
+              if (data[i][0]===("if-else")) {
+                let scope1 = data[i][data[i].length - 1]; 
+                let scope2 = data[i][data[i].length - 2]; 
+                y = this.translate(y, i + 2 + scope1 + scope2, 1);  // 2 jer imamo i compare i if kao naredbe
+              }
+            }
+            else if (data[i][0].includes("compare")) {
+              //pomjeri za -1
+              y = this.translate(y, i + 1, -1);
+            }
+          }
+          return y;
+        }
+      }
 ///////////////////////////////// sad krece pravo
-      let startX = 0;
+      let startX = 10;
       let startY = 25;
       /*let data = [['roll', 0, 100, 10],
       ['led', 255, 255, 255],
@@ -769,46 +808,52 @@ export default {
       ['if', 1],
       ['compare', 'B', '>', 10],
       ['roll', 90, 50, 5]*/
-      let data = [['roll', 90, 20, 5],
-      ['led', 255, 255, 255],
-      ['roll', 270, 20, 5],
+      let data = [
+      ['led', 1, 255, 255, 255],
+      ['loopTimes', 1, 5, 6],
+      ['declare', 2, 'B', 5],
+      ['if-else', 2, 1, 1],
+      ['compare', 2, 'B', '>', 10],
+      ['roll', 3, 90, 50, 5],
+      ['roll', 3, 10, 50, 5]
 
     ];
 
+    let bs = new BiloSta();
+    let yOff = bs.getOffsets(data);
 
-      let s = new Params(startX, startY, 120);
+
+      /*let s = new Params(startX, startY, 120);
       let a = new StartComponent(s);
       a.drawBody();
-      a.writeContent();
+      a.writeContent();*/
 
       let commandDict = {"roll": RollComponent, "led": LedComponent, "loopTimes": LoopTimes, "declare": SetComponent, "if": IfComponent, 
-      "compare": CompareComponent}
-      let commandWidth = {"roll": 330, "led": 150, "loopTimes": 200, "declare": 200, "if": 300, "compare": 180}
-      let xOffset = 0;
+      "compare": CompareComponent, 'if-else': IfElseComponent}
+      let commandWidth = {"roll": 330, "led": 150, "loopTimes": 200, "declare": 200, "if": 300, "compare": 180, "if-else": 300}
 
-       let yOffset = 1;
+      //let xOffset = 0;
+       //let yOffset = 1;
        for (let i = 0; i < data.length; i++) {
         let commandName = data[i][0]; 
         let ps = data[i].slice(1);
-        let p = new Params(startX + xOffset, startY + yOffset * height, commandWidth[commandName], ps);
+        let p = new Params(data[i][1] * 3 * resa, yOff[i] * height, commandWidth[commandName], ps);
         let c = new commandDict[commandName](p);
         if (c instanceof ComplexComponent){
-          xOffset += 3 * resa;
+          //xOffset += 3 * resa;
           p.linesNum = data[i][ps.length ];
         }
         else if (c instanceof CompareComponent) {
           p.y -= p.height;
           p.x += 30;
-          yOffset -= 1;
+          //yOffset -= 1;
         }
         c.drawBody();
         c.writeContent();
-        yOffset += 1;
+        //yOffset += 1;
        }
 
-     
-
-
+    
     },
   },
 };
