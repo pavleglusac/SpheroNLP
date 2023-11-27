@@ -286,12 +286,12 @@ class LoopTimes:
         return "LOOP TIMES " + str(self.times) + " DO\n" + "\n".join(map(str, self.body)) + "\nEND"
 
     def to_python(self, indent=0):
-        return indent_marker * indent + "for i in range(" + str(self.times) + "):\n" + "\n".join(
+        return indent_marker * indent + "for i"+ str(indent) + " in range(" + str(self.times) + "):\n" + "\n".join(
             map(lambda x: x.to_python(indent + 1), self.body))
 
     # TODO: trebace automatsko generisanje slova
     def to_javascript(self, indent=0):
-        return indent_marker * indent + "for (var i = 0; i < " + str(self.times) + "; ++i) {\n" + "\n".join(
+        return indent_marker * indent + "for (var i" + str(indent) + " = 0; i" + str(indent) + " < " + str(self.times) + "; ++i" + str(indent) + ") {\n" + "\n".join(
             map(lambda x: x.to_javascript(indent + 1), self.body)) + "\n" + indent_marker * indent + "}"
 
     def to_codeblocks(self, indent = 0):

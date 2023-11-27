@@ -277,6 +277,8 @@ export default {
       class CompareComponent extends CodeBlock {
         drawBody () {
           this.p.color = violetInverse;
+          // compare treba da bude malo uvucen u odnosu na ostale komponente
+          this.p.x += resa * 3;
 
           this.prepare();
           ctx.beginPath();
@@ -299,9 +301,9 @@ export default {
           this.p.ctx.fillStyle = 'white';
           this.p.ctx.font = '17px Arial';
 
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 2, this.p.y, this.p.height, this.p.content[0], 1.25);
-          this.drawInsideSquare(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 10, this.p.y, this.p.height, this.p.content[1], 0.65);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 17, this.p.y, this.p.height, this.p.content[2], 1.25);
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 1, this.p.y, this.p.height, this.p.content[1], 1.25);
+          this.drawInsideSquare(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 1, this.p.y, this.p.height, this.p.content[2], 0.65);
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 2, this.p.y, this.p.height, this.p.content[3], 1.25);
         
         }
       }
@@ -339,13 +341,13 @@ export default {
           this.p.ctx.font = '17px Arial';
 
           this.p.ctx.fillText("roll", this.p.x - this.p.resa, this.p.y + this.p.height /1.6);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 4, this.p.y, this.p.height, this.p.content[0] + '°');
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 4, this.p.y, this.p.height, this.p.content[1] + '°');
 
           this.p.ctx.fillText("at", this.lastX, this.p.y + this.p.height /1.6);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 4, this.p.y, this.p.height, this.p.content[1]);
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 4, this.p.y, this.p.height, this.p.content[2]);
 
           this.p.ctx.fillText("speed for", this.lastX, this.p.y + this.p.height /1.6);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 12, this.p.y, this.p.height, this.p.content[2] + 's' );
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 12, this.p.y, this.p.height, this.p.content[3] + 's' );
         }
       }
 
@@ -364,7 +366,7 @@ export default {
           this.p.ctx.fillStyle = 'white';
           this.p.ctx.font = '17px Arial';
           this.p.ctx.fillText("delay for", this.p.x - this.p.resa, this.p.y + this.p.height /1.6);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x - 5 * this.p.resa + 100, this.p.y, this.p.height, this.p.content[0] + 's');
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x - 5 * this.p.resa + 100, this.p.y, this.p.height, this.p.content[1] + 's');
         }
       }
 
@@ -379,7 +381,7 @@ export default {
         {
           this.p.ctx.fillStyle = 'white';
           this.p.ctx.font = '17px Arial';
-          let c = "(" + this.p.content[0] + ", " + this.p.content[1] + ", " + this.p.content[2] + ")";
+          let c = "(" + this.p.content[1] + ", " + this.p.content[2] + ", " + this.p.content[3] + ")";
           this.p.ctx.fillText("main LED", this.p.x - this.p.resa * 2, this.p.y + this.p.height /1.6);
           this.drawInsideOctagon(this.p.ctx, c, this.p.x + 85, this.p.y, this.p.height);
         }
@@ -391,7 +393,7 @@ export default {
           this.p.color = pink;
           }
 
-          writeContent()
+        writeContent()
         {
           this.p.ctx.stroke();
           this.p.ctx.fill();
@@ -400,12 +402,11 @@ export default {
           this.p.ctx.font = '17px Arial';
 
           this.p.ctx.fillText("set", this.p.x - this.p.resa, this.p.y + this.p.height /1.6);
-          this.drawInsideSquare(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 4, this.p.y, this.p.height, this.p.content[0]);
+          this.drawInsideSquare(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 4, this.p.y, this.p.height, this.p.content[1]);
 
           this.p.ctx.fillText("to", this.lastX + this.p.resa * 1, this.p.y + this.p.height /1.6);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 5, this.p.y, this.p.height, this.p.content[1]);
-
-         }
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 5, this.p.y, this.p.height, this.p.content[2]);
+        }
       }
 
       class SoundComponent extends TextComponent {
@@ -445,7 +446,7 @@ export default {
           this.p.ctx.fillStyle = 'white';
           this.p.ctx.font = '17px Arial';
           this.p.ctx.fillText("heading", this.p.x - this.p.resa, this.p.y + this.p.height /1.6);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x - 5 * this.p.resa + 100, this.p.y, this.p.height, this.p.content[0] + '°');
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x - 5 * this.p.resa + 100, this.p.y, this.p.height, this.p.content[1] + '°');
         }
       }
 
@@ -495,13 +496,13 @@ export default {
           this.p.ctx.font = '17px Arial';
 
           this.p.ctx.fillText("random", this.p.x - this.p.resa, this.p.y + this.p.height /1.6);
-          this.drawInsideSquare(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 9, this.p.y, this.p.height, this.p.content[0]);
+          this.drawInsideSquare(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 9, this.p.y, this.p.height, this.p.content[1]);
 
           this.p.ctx.fillText("from", this.p.x + this.p.resa * 18, this.p.y + this.p.height /1.6);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 25, this.p.y, this.p.height, this.p.content[1]);
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 25, this.p.y, this.p.height, this.p.content[2]);
 
           this.p.ctx.fillText("to", this.p.x + this.p.resa + this.p.resa * 32, this.p.y + this.p.height /1.6);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 36, this.p.y, this.p.height, this.p.content[2]);
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 36, this.p.y, this.p.height, this.p.content[3]);
         }
       }
 
@@ -544,11 +545,11 @@ export default {
           this.p.ctx.font = '17px Arial';
           this.p.y = this.p.y - offset;
           this.p.ctx.fillText("loop", this.p.x - this.p.resa * 2, this.p.y + this.p.height /1.6);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 4, this.p.y, this.p.height, this.p.content[0]);
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 4, this.p.y, this.p.height, this.p.content[1]);
           this.p.ctx.fillText("times", this.p.x + this.p.resa * 12, this.p.y + this.p.height /1.6);
           ctx.fillStyle = 'white';
           ctx.font = '30px Arial';
-          ctx.fillText(String.fromCharCode(0x02923), this.p.x  + 130, this.p.y + this.p.height * (this.p.linesNum + 2) - 15 );
+          ctx.fillText(String.fromCharCode(0x02923), this.p.x  + 140, this.p.y + this.p.height * (this.p.linesNum + 2) - 15 );
         }
       }
 
@@ -634,8 +635,8 @@ export default {
           this.p.ctx.fillStyle = 'white';
           this.p.ctx.fillText("if", this.p.x - this.p.resa * 2, this.p.y + this.p.height /1.6);
           this.drawInsideHexagon(this.p.ctx, this.p.color.insideColor, this.p.x - this.p.resa * 3 + 50, this.p.y, this.p.height, 'true');
-          this.p.ctx.fillText("then", this.p.x + 230, this.p.y + this.p.height /1.6);
-          this.p.ctx.fillText("else", this.p.x - this.p.resa * 2, this.p.y + this.p.height * this.p.linesNum);
+          this.p.ctx.fillText("then", this.p.x + 240, this.p.y + this.p.height /1.6);
+          this.p.ctx.fillText("else", this.p.x - this.p.resa * 2, this.p.y + this.p.height * (this.p.linesNum + 1) + this.p.height /1.6);
 
         }
       }
@@ -830,7 +831,7 @@ export default {
 
       let commandDict = {"roll": RollComponent, "led": LedComponent, "loopTimes": LoopTimes, "declare": SetComponent, "if": IfComponent, 
       "compare": CompareComponent, 'if-else': IfElseComponent}
-      let commandWidth = {"roll": 330, "led": 150, "loopTimes": 200, "declare": 200, "if": 300, "compare": 180, "if-else": 300}
+      let commandWidth = {"roll": 330, "led": 150, "loopTimes": 170, "declare": 200, "if": 100, "compare": 180, "if-else": 300}
 
       //let xOffset = 0;
        //let yOffset = 1;
@@ -848,6 +849,7 @@ export default {
           p.x += 30;
           //yOffset -= 1;
         }
+        //c.p.width = 300;
         c.drawBody();
         c.writeContent();
         //yOffset += 1;
