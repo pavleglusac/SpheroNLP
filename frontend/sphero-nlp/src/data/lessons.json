@@ -1,0 +1,82 @@
+[
+    {
+        "id": 0,
+        "name": "Uvod",
+        "tasks": [ 
+            {
+                "id": 0,
+                "name": "Kretanje po pravoj putanji",
+                "description": "Za svoj prvi samostalni zadatak, trebalo bi da pokrenete robota\npomoću upravljača duž jednog prolaza u lavirintu odnosno od jedne\nivice do druge (prikazano na slici), zatim podesite boju lampice na vašu\nomiljenu i vratite robotića unazad do starta. Tvoj zadatak treba da se sastoji iz sledećih koraka:\n1. Podesiti brzinu na malu (što bliže levoj ivici)\n2. Kretati robota unapred od zelene do crvene tačkice\n3. Promeniti boju sijalice na svoju omiljenu boju\n4. Usmeriti robota ka nazad i vratiti do starta",
+                "image": "1-1.png"
+            },
+            {
+                "id": 1,
+                "name": "Kretanje u pravougaonoj putanji",
+                "description": "Kako biste izvršili drugi zadatak, potrebno je da se krećete oko poligona (lavirinta) u\npravougaonoj putanji. Razmislite o tome kako biste ovo kretanje podelili na korake (poput koraka\niz prethodnog zadatka)? Koliko instrukcija biste naveli?"
+            },
+            {
+                "id": 2,
+                "name": "Kretanje po lavirintu",
+                "description": "U ovom zadatku cilj je da pronađete put za koji je potrebno najmanji broj instrukcija (koraka) da bi došao od zelene do crvene tačkice. Kada pronađete taj put, provozajte robotića njime. Koliko koraka sadrži program koji bi odvezao robotića od starta do cilja?",
+                "image": "1-3.png"
+            },
+            {
+                "id": 3,
+                "name": "Kretanje robota oko lavirinta",
+                "description": "Postavljanjem robota na jedan od uglova lavirinta napraviti program nizanjem blokova kojima će\nrobot u pravugaonoj putanji obići lavirint, i vratiti se na početan položaj. Smer kretanja je\nproizvoljan.",
+                "image": "1-4.png"
+            },
+            {
+                "id": 4,
+                "name": "Najkraća putanja",
+                "description": "Koristeći blokove potrebno je da sami pronađete putanju od zelene tačkice do crvene, ali tako da ona ima najmanji moguć broj koraka. Obratite pažnju na to da je u ovom slučaju moguće pronaći više putanji, ali je na vama da izračunate najkraću."
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "name": "Grananje",
+        "tasks": [ 
+            {
+                "id": 0,
+                "name": "Kamen-papir-makaze",
+                "description": "Pronađite prijatelja ili roditelja koji će vam pomoći u izradi ovog zadatka. Igranjem partije kamen-papir-makazice sa vašim parom odredićete cilj na koji robotić treba da stigne polazeći iz zelene tačke (slobodnim kretanjem pomoću volana). Ukoliko vi pobedite, putanju treba da završite na crvenoj tački. Ukoliko vaš par pobedi, na ljubičastoj.",
+                "image": "2-1.png"
+            },
+            {
+                "id": 1,
+                "name": "Svetlucanje u zavisnosti od dužine imena",
+                "description": "Napravite varijablu broj koja predstavlja broj slova u vašem imenu. Ukoliko je ovaj broj manji od 5, robot treba da zasija plavom bojom onoliko puta koliko slova vaše ime ima. Ukoliko je broj veći ili jednak, robot treba da zasija pet puta crvenom bojom."
+            },
+            {
+                "id": 2,
+                "name": "Nasumični broj",
+                "description": "Generisanjem nasumičnog broja od 1 do 10 odredićemo završnu tačku putanje robota. Najpre, potrebno je da blokovski dovedete robota do plave tačke. Potom, ukoliko je generisan broj veći od 5, potrebno je da nastavite kretanje do crvene.",
+                "image": "2-3.png"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Petlje",
+        "tasks": [
+            {
+                "id": 0,
+                "name": "Trčanje oko terena",
+                "description": "Nalaziš se na času fizičkog vaspitanja, i nastavnik ti je rekao da treba da optrčiš 5 krugova oko fudbalskog terena."
+            },
+            {
+                "id": 1,
+                "name": "Uslovno kruženje",
+                "description": "Postavite robotića na početnu zelenu poziciju. Potrebno je napraviti varijablu čija će vrednost biti nasumično dodeljen broj 1 ili 2. Ukoliko njena vrednost bude 1, potrebno je pratiti sivu putanju na prvoj slici, i pritom obići 3 puta narandžastu tačkicu smerom suprotnog od kazaljke na satu. Ukoliko njena vrednost bude 2, potrebno je pratiti sivu putanju prikazanu na drugoj slici, ali narandžastu tačkicu obići 3 puta u smeru kazaljke na satu."
+            },
+            {
+                "id": 2,
+                "name": "Branje jabuka",
+                "description": "Nalazite se na početnoj poziciji zelene tačkice. Potrebno je da odete do stabla jabuka, uberete sve jabuke i vratite ih do zelene tačkice gde se nalazi korpa. Dok šetate do drveta i nazad možete da nosite maksimalno 2 jabuke (po jednu u svakoj ruci). Međutim, dok se penjete do krošnje ili silazite sa nje možete da nosite samo jednu (druga ruka vam je potrebna za merdevine). Dakle, potrebno je da odete do stabla, dva putauradite sledeće: popnete se gore, pustite zvuk (BabyBird) kao znak branja jabuke, spustite je dole; apotom se vratite do korpe na zelenoj tačkici sa 2 jabuke. Ovo je potrebno ponoviti dokle god ima jabuka na drvetu (pogledajte na slici)."
+            }
+
+        ]
+    }
+
+]
