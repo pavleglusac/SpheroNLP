@@ -278,7 +278,7 @@ export default {
         drawBody () {
           this.p.color = violetInverse;
           // compare treba da bude malo uvucen u odnosu na ostale komponente
-          this.p.x += resa * 3;
+          this.p.x += resa * 4;
 
           this.prepare();
           ctx.beginPath();
@@ -301,9 +301,9 @@ export default {
           this.p.ctx.fillStyle = 'white';
           this.p.ctx.font = '17px Arial';
 
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 1, this.p.y, this.p.height, this.p.content[1], 1.25);
-          this.drawInsideSquare(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 1, this.p.y, this.p.height, this.p.content[2], 0.65);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 2, this.p.y, this.p.height, this.p.content[3], 1.25);
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 1, this.p.y, this.p.height, this.p.content[0], 1.25);
+          this.drawInsideSquare(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 1, this.p.y, this.p.height, this.p.content[1], 0.65);
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 2, this.p.y, this.p.height, this.p.content[2], 1.25);
         
         }
       }
@@ -405,11 +405,23 @@ export default {
           this.drawInsideSquare(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 4, this.p.y, this.p.height, this.p.content[1]);
 
           this.p.ctx.fillText("to", this.lastX + this.p.resa * 1, this.p.y + this.p.height /1.6);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 5, this.p.y, this.p.height, this.p.content[2]);
+          //this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 5, this.p.y, this.p.height, this.p.content[2]);
+          if (this.p.content[2].length > 1)
+          {
+            let newData = this.p.content[2];
+            let p = new Params(this.p.x, this.p.y, 300, [newData[2], newData[3]]);
+            let rand = new RandomExpression(p);
+            rand.drawBody();
+            rand.writeContent();
+          }          
+          else {
+            this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 5, this.p.y, this.p.height, this.p.content[2]);
+          }
         }
       }
 
-      class SoundComponent extends TextComponent {
+
+      class SoundComponent extends TextComponent  {
         constructor(params) {
           super(params);
           this.p.color = darkPink;
@@ -480,6 +492,8 @@ export default {
           super(params);
           this.p.color = darkBlue;
           this.p.height *= 0.8;
+          this.p.y += this.p.height / 10
+          this.p.x += this.p.resa * 20;
         }
         drawUpperLine() {}
         drawBottomLine() {}
@@ -495,14 +509,14 @@ export default {
           this.p.ctx.fillStyle = 'white';
           this.p.ctx.font = '17px Arial';
 
-          this.p.ctx.fillText("random", this.p.x - this.p.resa, this.p.y + this.p.height /1.6);
-          this.drawInsideSquare(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 9, this.p.y, this.p.height, this.p.content[1]);
+          this.p.ctx.fillText("random", this.p.x - this.p.resa * 2, this.p.y + this.p.height /1.6);
+          this.drawInsideSquare(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 7, this.p.y, this.p.height, "int");
 
-          this.p.ctx.fillText("from", this.p.x + this.p.resa * 18, this.p.y + this.p.height /1.6);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 25, this.p.y, this.p.height, this.p.content[2]);
+          this.p.ctx.fillText("from", this.lastX + resa * 1, this.p.y + this.p.height /1.6);
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 7, this.p.y, this.p.height, this.p.content[0]);
 
-          this.p.ctx.fillText("to", this.p.x + this.p.resa + this.p.resa * 32, this.p.y + this.p.height /1.6);
-          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.p.x + this.p.resa * 36, this.p.y, this.p.height, this.p.content[3]);
+          this.p.ctx.fillText("to", this.lastX + this.p.resa * 0, this.p.y + this.p.height /1.6);
+          this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 4, this.p.y, this.p.height, this.p.content[1]);
         }
       }
 
@@ -589,6 +603,22 @@ export default {
           this.p.ctx.fillText("if", this.p.x - this.p.resa * 2, this.p.y + this.p.height /1.6);
           //this.drawInsideHexagon(this.p.ctx, this.p.color.insideColor, this.p.x - this.p.resa * 3 + 50, this.p.y, this.p.height, 'true');
           this.p.ctx.fillText("then", this.p.x + 240, this.p.y + this.p.height /1.6);
+          // ovdje treba staviti da se napravi compare
+
+          // sad je vrijeme da se pravi compare komponenta
+          if (this.p.content[1].length > 1)
+          {
+            let newData = this.p.content[1]; 
+            let p = new Params(this.p.x, this.p.y, 180, [newData[2], newData[3], newData[4]]);
+            let rand = new CompareComponent(p);
+            rand.drawBody();
+            rand.writeContent();
+          }          
+          /*else {
+            this.drawInsideRec(this.p.ctx, this.p.color.insideColor, this.lastX + this.p.resa * 5, this.p.y, this.p.height, this.p.content[2]);
+          }*/
+
+
         }
       }
 
@@ -638,6 +668,14 @@ export default {
           this.p.ctx.fillText("then", this.p.x + 240, this.p.y + this.p.height /1.6);
           this.p.ctx.fillText("else", this.p.x - this.p.resa * 2, this.p.y + this.p.height * (this.p.linesNum + 1) + this.p.height /1.6);
 
+          if (this.p.content[1].length > 1)
+          {
+            let newData = this.p.content[1]; 
+            let p = new Params(this.p.x, this.p.y, 180, [newData[2], newData[3], newData[4]]);
+            let rand = new CompareComponent(p);
+            rand.drawBody();
+            rand.writeContent();
+          }       
         }
       }
 
@@ -673,7 +711,7 @@ export default {
 
 */
       // Pavlov primjer
-      let secondX = 500;
+     /* let secondX = 500;
       let secondY = 100;
       let pStart = new Params(secondX, secondY, 130);
       let oStart = new StartComponent(pStart);
@@ -719,6 +757,7 @@ export default {
       let oSound = new SoundComponent(pSound);
       oSound.drawBody();
       oSound.writeContent();
+      */
     /*
       //treca skupina
       let thirdX = 1000;
@@ -775,53 +814,127 @@ export default {
           let y = [];
           for (let j = 0; j <= data.length; j++) {
               y.push(j);
-          }
-          
-          for (let i = 0; i<data.length; i++) {
-            // sad ako je slozena treba da pomjerim gore, a ako je jednostavna, treba da spustim sve lancano dole
-            
-            if (data[i][0].includes("loop") || data[i][0].includes("if")) {
-              //pomjeri za +1
+          }    
+
+          for (let i = 0; i < data.length; i++) {
+
+            if (data[i][0].includes("loop")) {
               let scope = data[i][data[i].length - 1]; 
-              y = this.translate(y, i + 2 + scope, 1);
-              // ovdje dodati jos +1 za else
+              y = this.translate(y, i + 1 + scope, 1);
+            }
+/*            else if (data[i][0].includes("compare") || data[i][0].includes("random")) {
+              y = this.translate(y, i, -1);
+            }*/
+            else if (data[i][0].includes("if"))
+            {
+              let scope = data[i][data[i].length - 1]; 
+              y = this.translate(y, i + 1 + scope, 1);
+
               if (data[i][0]===("if-else")) {
-                let scope1 = data[i][data[i].length - 1]; 
-                let scope2 = data[i][data[i].length - 2]; 
-                y = this.translate(y, i + 2 + scope1 + scope2, 1);  // 2 jer imamo i compare i if kao naredbe
+              let scope1 = data[i][data[i].length - 1]; 
+              let scope2 = data[i][data[i].length - 2]; 
+              y = this.translate(y, i + 2 + scope1 + scope2, 1); 
               }
             }
-            else if (data[i][0].includes("compare")) {
-              //pomjeri za -1
-              y = this.translate(y, i + 1, -1);
+           
+          console.log(y); 
+          }
+          return y;
+        }
+
+        addIfElse(data, y) {
+          for (let i = 0; i< data.length; i++) {
+            if (data[i][0]==="if-else")
+            // treba lancano da pomjerim sve komponente koje idu nakon i+prva duzina
+            {
+              let len = data[i].length;
+              let scope = data[i][len-2]; // ovo je predzadnji element
+              y = this.translate(y, i + 1 + scope, 1);
             }
           }
           return y;
         }
+
+        getOffsets2(data) {
+          let y = [];
+          for (let j = 0; j <= data.length; j++) {
+              y.push(j);
+          }    
+          // svaki put kad vidim da se x vratilo za 1, moram da povecam y za 1
+          for (let i = 1; i < data.length; i++) {
+            let diff = data[i - 1][1] - data[i][1];
+            if (diff > 0) {
+              y = this.translate(y, i, diff)
+            } 
+          }
+          y = this.addIfElse(data, y);
+          return y;
+        }
       }
+
+      
+      
+
 ///////////////////////////////// sad krece pravo
       let startX = 10;
       let startY = 25;
-      /*let data = [['roll', 0, 100, 10],
-      ['led', 255, 255, 255],
-      ['loopTimes', 5, 4],
-      ['declare', 'B', 5],
-      ['if', 1],
-      ['compare', 'B', '>', 10],
-      ['roll', 90, 50, 5]*/
-      let data = [
+      /*let data = [
       ['led', 1, 255, 255, 255],
       ['loopTimes', 1, 5, 6],
       ['declare', 2, 'B', 5],
-      ['if-else', 2, 1, 1],
-      ['compare', 2, 'B', '>', 10],
+      ['if-else', 2, ['compare', 2, 'B', '>', 10], 1, 1],
+      
       ['roll', 3, 90, 50, 5],
-      ['roll', 3, 10, 50, 5]
+      ['roll', 3, 10, 50, 5],
+      ['roll', 1, 10, 50, 5]
+    ];*/
 
-    ];
+    /*let data = [
+      ['led', 1, 255, 255, 255],
+      ['loopTimes', 1, 5, 4],
+      ['declare', 2, 'B', ['random', 2, 0, 2]],
+      ['if', 2, ['compare', 3, 'B', '>', 10], 1],
+      ['roll', 3, 90, 50, 5]
+    ]*/
+
+    /*let data = [
+    ['declare', 1,'B', ['random', 1, 0, 2]],
+    ['if', 1, ['compare', 2, 'B', '>', 10],4],
+    ['roll', 2, 90, 50, 5],
+    ['loopTimes', 2, 5, 1],
+    ['led', 3, 255, 255, 255]
+    ]*/
+
+    /*let data = [
+      ['start', 1],
+      ['declare', 1, 'B', ['random', 1, 0, 2]],
+      ['if', 1, ['compare', 2, 'B', '>', 10], 6],
+      ['roll', 2, 90, 50, 5],
+      ['loopTimes', 2, 5, 3],
+      ['if', 3, ['compare', 4, 'B', '<', 15],1],
+      ['assign', 4, 'B', 10],
+      ['roll', 1, 90, 50, 5],
+      ['end', 1]
+      
+    ]*/
+
+    let data = [
+    ['declare', 1, 'B', ['random', 1, 0, 2]],
+    ['if', 1, ['compare', 2, 'B', '>', 10], 6],
+    ['roll', 2, 90, 50, 5],
+    ['loopTimes', 2, 5, 3],
+    ['if', 3, ['compare', 4, 'B', '<', 15], 1],
+    ['assign', 4, 'B', ['random', 4, 0, 2]],
+    ['roll', 1, 90, 50, 5]
+
+    ]
+    data.unshift(['start', 1]);
+    data.push(['end', 1]);
+    console.log(data);
+
 
     let bs = new BiloSta();
-    let yOff = bs.getOffsets(data);
+    let yOff = bs.getOffsets2(data);
 
 
       /*let s = new Params(startX, startY, 120);
@@ -830,29 +943,28 @@ export default {
       a.writeContent();*/
 
       let commandDict = {"roll": RollComponent, "led": LedComponent, "loopTimes": LoopTimes, "declare": SetComponent, "if": IfComponent, 
-      "compare": CompareComponent, 'if-else': IfElseComponent}
-      let commandWidth = {"roll": 330, "led": 150, "loopTimes": 170, "declare": 200, "if": 100, "compare": 180, "if-else": 300}
+      "compare": CompareComponent, 'if-else': IfElseComponent, "random": RandomExpression, "assign": SetComponent, "start": StartComponent,
+        "end": EndComponent}
+      let commandWidth = {"roll": 330, "led": 150, "loopTimes": 170, "declare": 170, "if": 360, "compare": 180, 
+      "if-else": 300, "random": 290, "assign": 170, "start": 120, "end":150}
 
-      //let xOffset = 0;
-       //let yOffset = 1;
+
        for (let i = 0; i < data.length; i++) {
         let commandName = data[i][0]; 
         let ps = data[i].slice(1);
         let p = new Params(data[i][1] * 3 * resa, yOff[i] * height, commandWidth[commandName], ps);
         let c = new commandDict[commandName](p);
         if (c instanceof ComplexComponent){
-          //xOffset += 3 * resa;
           p.linesNum = data[i][ps.length ];
         }
-        else if (c instanceof CompareComponent) {
-          p.y -= p.height;
-          p.x += 30;
-          //yOffset -= 1;
+        if (c instanceof SetComponent) {
+          if (data[i][3].length > 3)
+          {
+            c.p.width = 470;
+          }
         }
-        //c.p.width = 300;
         c.drawBody();
         c.writeContent();
-        //yOffset += 1;
        }
 
     

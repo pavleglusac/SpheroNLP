@@ -112,7 +112,7 @@ class DeclareStatement:
         return indent_marker * indent + "var " + str(self.name) + " = " + str(self.value) + ";"
 
     def to_codeblocks(self, indent = 0):
-        return str(['declare', indent, self.name, self.value])
+        return str(['declare', indent, self.name, self.value.to_codeblocks(indent)])
 
 
 class AssignStatement:
@@ -131,7 +131,7 @@ class AssignStatement:
         return indent_marker * indent + str(self.name) + " = " + str(self.value) + ";"
 
     def to_codeblocks(self, indent = 0):
-        return str(["assign", indent, self.name, self.value])
+        return str(["assign", indent, self.name, self.value.to_codeblocks(indent)])
 
 
 class IfStatement:
@@ -152,7 +152,7 @@ class IfStatement:
             map(lambda x: x.to_javascript(indent + 1), self.body)) + "\n" + indent_marker * indent + "}"
 
     def to_codeblocks(self, indent = 0):
-        return str(["if", indent, get_body_lines_count(self.body)]) + ',' + ''.join(self.condition.to_codeblocks()) + ',' + ','.join(map
+        return str(["if", indent, self.condition.to_codeblocks(indent + 1), get_body_lines_count(self.body)]) + ',' + ','.join(map
                (lambda x: x.to_codeblocks(indent + 1), self.body))
 
 
@@ -218,7 +218,7 @@ class CompareExpression:
         return str(self.left) + " " + str(self.op) + " " + str(self.right)
 
     def to_codeblocks(self, indent = 0):
-        return str(['compare', indent, self.left, self.op, self.right])
+        return ['compare', indent, self.left, self.op, self.right]
 
 
 class Random:
@@ -237,7 +237,7 @@ class Random:
         return "getRandomInt(" + str(self.min) + ", " + str(self.max) + ")"
 
     def to_codeblocks(self, indent = 0):
-        return str(['random', indent, self.min, self.max])
+        return ['random', indent, self.min, self.max]
 
 class Literal:
     def __init__(self, value, parent=None):
