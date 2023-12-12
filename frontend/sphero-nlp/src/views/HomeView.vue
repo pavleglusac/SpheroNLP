@@ -30,11 +30,11 @@ import Navbar from '../components/Navbar.vue'
           <div class="card-body">
             <h2 class="card-title" style="font-weight: bold;">YouTube Tutorijali</h2>
             <p class="card-text" style="font-size: x-large; font-weight: 600;">
-              Pogledajte lekcije "Učenje programiranja pomoću Sphero robota" Tare Pogančev kojima ćete savladali Sphero! 👇
+              Pogledajte YouTube tutorijal "Učenje programiranja pomoću Sphero robota" kojima ćete savladali Sphero! 👇
             </p>
             <div class="d-grid gap-2 col-6 mx-auto mt-5">
               <a href="https://www.youtube.com/watch?v=UXwSec4XQA4&list=PLJTB8EiachRjYkP5tM5pXU9icKZA378u3" class="btn btn-primary btn-lg d-block w-100">
-                Lekcije
+                Tutorijal
               </a>
             </div>
 

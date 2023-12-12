@@ -11,7 +11,8 @@ with SpheroEduAPI(toy) as droid:
     droid.set_heading(0)
     droid.set_speed(30)
 
-    droid.roll(150, 30, 3)
+    droid.roll(0, 30, 3)
 
-    time.sleep(3000)
+    time.sleep(3)
     droid.roll(0, 0, 1)
+    # disconnect

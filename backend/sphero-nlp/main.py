@@ -8,6 +8,7 @@ from fastapi import Body, FastAPI
 from translator.translators import ChatGPTTranslator, MockTranslator
 from language import Language, parser
 import sys
+import asyncio
 
 from pydantic import BaseModel
 
@@ -23,11 +24,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-text_translator = MockTranslator()
+text_translator = ChatGPTTranslator()
 
-def execute_code(code_model):
+async def execute_code(code_model):
     try:
-        exec(code_model.to_python())
+        await asyncio.to_thread(exec, code_model.to_python())
     except Exception as e:
         print(e)
         return str(e)
@@ -70,9 +71,12 @@ async def generate(request: TranslationRequest):
 
 @app.post("/execute")
 async def execute(text=Body(embed=True)):
+    print(f"User input: {text}")
     code = text_translator.translate(text)
+    print("*"*50)
+    print(code)
     code_model = parser.parse(code)
-    execute_code(code_model)
+    await execute_code(code_model)
     return [code_model.to_javascript(), code_model.to_codeblocks(), language_model_to_json(code_model)]
 
 

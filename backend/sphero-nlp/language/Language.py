@@ -112,7 +112,8 @@ class DeclareStatement:
         return indent_marker * indent + "var " + str(self.name) + " = " + str(self.value) + ";"
 
     def to_codeblocks(self, indent = 0):
-        return str(['declare', indent, self.name, self.value.to_codeblocks(indent)])
+        parsed_value = self.value.to_codeblocks(indent) if type(self.value) != int else self.value
+        return str(['declare', indent, self.name, parsed_value])
 
 
 class AssignStatement:

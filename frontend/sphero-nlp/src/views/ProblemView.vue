@@ -40,7 +40,7 @@ import SimulationView from '../components/SimulationView.vue';
                 </div>
             </div>
         </div>
-        <div id="code-div" class="w-50" style="height: 100%;">
+        <div id="code-div" style="height: 100%; width: 20%;">
             <div class="h-100" style="display: flex; flex-direction: column;" ref="cont2">
                 <div class="box p-1" ref="topBox2" id="topBox2">
                     <Chat @newMessage="onMessageSent"/>
@@ -85,7 +85,7 @@ import SimulationView from '../components/SimulationView.vue';
 }
 
 #code-div {
-  flex: 0 0 65%; /* flex-grow, flex-shrink, flex-basis */
+  flex: 0 0 62%; /* flex-grow, flex-shrink, flex-basis */
 }
 
 #bottomRightBox2 {

@@ -1,12 +1,12 @@
 <template>
     <div class="h-100 w-100">
-        <section ref="chatArea" class="chat-area">
+        <section ref="chatArea" class="chat-area mb-5">
             <p v-for="(message, index) in messages" class="message" :class="{ 'message-out': message.author === 'you', 'message-in': message.author !== 'you' }" :key="index">
             {{ message.body }}
             </p>
             <p class="mb-5"></p>
         </section>
-        <div style="display: flex; justify-content: center; margin-top: -5%;">
+        <div style="display: flex; justify-content: center; margin-top: -6%;">
             <div class="input-group w-75" style="">
                 <input type="text" class="form-control rounded-extra" placeholder="Type your message..." 
                 aria-label="Chat message input" v-model="youMessage" @keydown.enter.prevent="sendMessage('out')">
@@ -24,7 +24,7 @@ import axios from 'axios';
             return {
                 messages: [
                     {
-                        body: 'Dobrodošli, ja sam SpheroBot! Tu sam da pretvorim Vaše rečenice u programski kod!',
+                        body: 'Dobrodošli, ja sam SpheroBot! Tu sam da pretvorim Vaše rečenice u programski kod! Napišite instrukcije poput "idi napred polako" i ja ću ih pretvoriti u kod!',
                         author: 'bob'
                     },
                     /*{
@@ -42,25 +42,33 @@ import axios from 'axios';
         },
         methods: {
             async sendMessage(direction) {
-                let code = await this.sendRequest();
+                let myMessage = this.youMessage;
+                this.addToChat(direction);
+                this.bobMessage = "Izvršavam...";
+                this.addToChat('in');
+                let code = await this.sendRequest(myMessage);
+
                 this.$eventBus.emit('code', code);
                 this.$emit('newMessage', code);
-                this.addToChat(direction);
             },
 
             clearAllMessages() {
                 this.messages = []
             },
 
-            async sendRequest() {
+            async sendRequest(msg) {
                 try {
-                    const response = await axios.post('http://localhost:8000/translate', {
-                        text: this.youMessage
+                    console.log("Sending request...");
+                    console.log(msg);
+                    const response = await axios.post('http://localhost:8000/execute', {
+                        text: msg
                     });
                     console.log(response.data);
                     return response.data;
                 } catch (error) {
                     console.error('Error fetching data:', error);
+                    this.bobMessage = "Došlo je do greške."
+                    this.addToChat('in');
                     throw error;
                 }
             },

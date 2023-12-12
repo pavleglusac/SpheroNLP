@@ -114,11 +114,12 @@ export default {
         // make boxes draggable on mouse
         robot.plugin.draggable = true;
         var isSpinning = false;
+        var spinningDireciton = 1;
 
         Events.on(engine, 'afterUpdate', function() {
             if (isSpinning) {
                 console.log("Spinning");
-                Body.setAngularVelocity(robot, 0.05);
+                Body.setAngularVelocity(robot, spinningDireciton*0.025);
                 // Body.setVelocity(robot, { x: 0, y: 0 });
             } else {
                 // Body.setVelocity(robot, { x: 0, y: 0 });
@@ -128,8 +129,13 @@ export default {
 
         // Toggle spinning with the Enter key
         document.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
+            if (event.key === '*') {
                 isSpinning = !isSpinning;
+                spinningDireciton = 1;
+            }
+            if (event.key == '-') {
+                isSpinning = !isSpinning;
+                spinningDireciton = -1;
             }
             if (event.key === 'ArrowUp') {
                 const speed = 2; // adjust this value for desired speed
@@ -143,9 +149,6 @@ export default {
                 Body.setVelocity(robot, { x: 0, y: 0 });
             }
         });
-
-
-
 
         const mouse = Mouse.create(render.canvas);
         const mouseConstraint = MouseConstraint.create(engine, {
@@ -209,6 +212,8 @@ export default {
             setTimeout(() => {
                 Body.setVelocity(robot, { x: 0, y: 0 });
             }, seconds * 1000);
+
+            Body.rotate(robot, degrees);
 
         });
 

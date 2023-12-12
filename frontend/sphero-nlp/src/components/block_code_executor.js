@@ -14,7 +14,7 @@ export function executeCode(code, vue_context) {
 
     async function RollStatement(block) {
         let degrees = block['degrees'];
-        let speed = block['speed'];
+        let speed = block['speed'] * 1.75;
         let seconds = block['seconds'];
         console.log("RollStatement called");
         console.log(degrees, speed, seconds);
